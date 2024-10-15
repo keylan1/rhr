@@ -104,18 +104,24 @@ class RHR_Watch_AppUITests: XCTestCase {
     
     func testSwipeToDelete() throws {
         // First, add an item
-        //try testAddNewItem()
+        try testAddNewItem()
         
         // Find the added item
         let addedItem = app.staticTexts["Task"]
         XCTAssertTrue(addedItem.exists, "Added item does not exist")
         
+        let frame = addedItem.frame
+        
         // Perform the swipe left gesture
         addedItem.swipeLeft()
         
+        // Calculate the position of the delete area (right edge of the screen)
+            let deleteX = app.frame.maxX - 10 // 10 points from the right edge
+            let deleteY = frame.midY
+        
         // Tap the delete button
-        //let frame = addedItem.frame
-        let deleteCoordinate = addedItem.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5))
+        let deleteCoordinate = app.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
+                .withOffset(CGVector(dx: deleteX, dy: deleteY))
            deleteCoordinate.tap()
         
         //sleep(1)
