@@ -7,37 +7,121 @@
 
 import XCTest
 
-final class RHR_Watch_AppUITests: XCTestCase {
-
+class RHR_Watch_AppUITests: XCTestCase {
+    
+    var app: XCUIApplication!
+    
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-
-        // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
-
-        // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    @MainActor
-    func testExample() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
+        app = XCUIApplication()
         app.launch()
-
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    }
+    override func setUp() {
+        super.setUp()
+        let domain = Bundle.main.bundleIdentifier!
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
     }
 
-    @MainActor
-    func testLaunchPerformance() throws {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, watchOS 7.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTApplicationLaunchMetric()]) {
-                XCUIApplication().launch()
+    func testAddNewItem() throws {
+        print("Starting testAddNewItem")
+        
+        // Tap the plus button on the main screen
+        let plusButton = app.buttons["plus"]
+        XCTAssertTrue(plusButton.waitForExistence(timeout: 5), "Plus button does not exist")
+        plusButton.tap()
+        print("Plus button tapped")
+        
+        // Wait for the text field to appear in AddItemView
+        let textField = app.textFields["New item"]
+        XCTAssertTrue(textField.waitForExistence(timeout: 5), "Text field did not appear")
+        print("Text field appeared")
+        
+        // Tap the text field to open the keyboard screen
+        textField.tap()
+        print("Text field tapped, should open keyboard screen")
+        
+        // Wait for the keyboard to appear
+        let keyboard = app.keyboards.firstMatch
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 5), "Keyboard did not appear")
+        print("Keyboard appeared")
+        
+        let newItemTitle = "Task"
+        for char in newItemTitle {
+            
+                if char == " " {
+                    keyboard.keys["Leerzeichen"].tap() // "Leerzeichen" is "space" in German
+                } else {
+                    keyboard.keys[String(char)].tap()
+                }
+                Thread.sleep(forTimeInterval: 0.5) // Wait a bit between key taps
             }
-        }
+            print("Attempted to type: \(newItemTitle)")
+        // Tap the "Done"/"Fertig" button on the keyboard
+        let doneButton = app.buttons["Fertig"]
+        XCTAssertTrue(doneButton.waitForExistence(timeout: 5))
+        doneButton.tap()
+         // "Fertig" is "Done" in German
+        print("Done/Fertig button tapped")
+        
+        // Wait for AddItemView to reappear
+        XCTAssertTrue(textField.waitForExistence(timeout: 5), "Did not return to AddItemView")
+        print("Returned to AddItemView")
+        
+        // Tap the Add button in AddItemView
+        let addButton = app.buttons["Add Task"]
+        XCTAssertTrue(addButton.waitForExistence(timeout: 5), "Add button does not exist")
+        addButton.tap()
+        print("Add button tapped")
+        
+        // Verify that we're back on the main view
+        XCTAssertTrue(plusButton.waitForExistence(timeout: 5), "Did not return to main view")
+        
+        // Verify the new item appears in the list
+        let newItemText = app.staticTexts[newItemTitle]
+        XCTAssertTrue(newItemText.waitForExistence(timeout: 5), "New item '\(newItemTitle)' not found in the list")
+        print("New item '\(newItemTitle)' found in the list")
     }
+
+    func testToggleItemCompletion() throws {
+        // First, add an item
+        //try testAddNewItem()
+        
+        // Now, tap the item to toggle its completion
+        let item = app.staticTexts["Task"]
+        XCTAssertTrue(item.exists, "Added item does not exist")
+        item.tap()
+        
+        // Verify the item is marked as completed
+        let checkmark = app.images["checkmark"]
+                XCTAssertTrue(checkmark.waitForExistence(timeout: 2), "Checkmark appears after toggling completion")
+        
+        // Tap again to un-complete
+        let itemLeftSide = item.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5))
+        itemLeftSide.tap()
+        XCTAssertTrue(checkmark.waitForNonExistence(timeout: 2), "Checkmark no longer appears after toggling completion off")
+    }
+    
+    func testSwipeToDelete() throws {
+        // First, add an item
+        //try testAddNewItem()
+        
+        // Find the added item
+        let addedItem = app.staticTexts["Task"]
+        XCTAssertTrue(addedItem.exists, "Added item does not exist")
+        
+        // Perform the swipe left gesture
+        addedItem.swipeLeft()
+        
+        // Tap the delete button
+        //let frame = addedItem.frame
+        let deleteCoordinate = addedItem.coordinate(withNormalizedOffset: CGVector(dx: 0.95, dy: 0.5))
+           deleteCoordinate.tap()
+        
+        //sleep(1)
+        
+        // Verify the item has been deleted
+        XCTAssertFalse(addedItem.exists, "Item should have been deleted")
+    }
+
 }
