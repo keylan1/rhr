@@ -29,7 +29,7 @@ struct MainView: View {
                 }
                 .onDelete(perform: deleteItems)
             }
-            .navigationTitle("To-Do List")
+            .navigationTitle("To-Dos")
             .toolbar {
                 ToolbarItem(placement: .bottomBar) {
                     Button(action: { showingAddItemView = true }) {
