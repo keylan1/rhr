@@ -28,9 +28,6 @@ jobs:
       - name: Check Xcode version
         run: xcodebuild -version
 
-      - name: Launch WatchOS Simulator
-        run: xcrun simctl launch booted 7E4F0B48-4606-4208-B6E1-A1FBCA93A4C5
-
       - name: Build
         run: |
             xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,OS=11.0,name=Apple Watch Series 10 (46mm)'
