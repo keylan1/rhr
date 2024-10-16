@@ -33,9 +33,9 @@ jobs:
 
       - name: Build
         run: |
-            xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,OS=11.0,name=Apple Watch Series 10 (46mm)'
+            xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,id=66142397-974E-4C43-B3A2-8A058C2C2CC2OS=11.0,name=Apple Watch Series 10 (46mm)'
 
       - name: Test
         run: |
-            xcodebuild test -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,OS=11.0,name=Apple Watch Series 10 (46mm)'
+            xcodebuild test -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,id=66142397-974E-4C43-B3A2-8A058C2C2CC2OS=11.0,OS=11.0,name=Apple Watch Series 10 (46mm)'
 
