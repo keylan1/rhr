@@ -2,34 +2,34 @@ name: WatchOS RHR Build
 
 on:
   push:
-    branches: [main]
+    branches: 
+      - main
   pull_request:
-    branches: [main]
+    types: [opened, reopened]
 
 jobs:
   build:
     runs-on: macos-latest
-
     steps:
-        - name: Checkout
+      - name: Checkout
         uses: actions/checkout@v4
-        
-        - name: Cache Swift packages
+      
+      - name: Cache Swift packages
         uses: actions/cache@v4
         with:
           path: .build
           key: $-spm-$
           restore-keys: |
             $-spm-
-            
-        - name: Select Xcode
+      
+      - name: Select Xcode
         run: sudo xcode-select -switch /Applications/Xcode.app
       
-        - name: Build
+      - name: Build
         run: |
             xcode clean build project RHR.xcodeproj -scheme RHR Watch App -destination 'platform=watchOS Simulator, name=Apple Watch Series 10 (46mm), OS=latest'
     
-        - name: Test
+      - name: Test
         run: |
             xcodebuild test -project RHR.xcodeproj -scheme RHR Watch App -destination 'platform=watchOS Simulator, name=Apple Watch Series 10 (46mm), OS=latest'
 
