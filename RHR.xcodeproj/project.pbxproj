@@ -45,6 +45,11 @@
 			path = "RHR Watch AppUITests";
 			sourceTree = "<group>";
 		};
+		2685F14C2CBFA094004F53B3 /* .github */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = .github;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,6 +80,7 @@
 		262123D02CBD530E0071A520 = {
 			isa = PBXGroup;
 			children = (
+				2685F14C2CBFA094004F53B3 /* .github */,
 				262123DB2CBD530E0071A520 /* RHR Watch App */,
 				262123EC2CBD53110071A520 /* RHR Watch AppTests */,
 				262123F62CBD53110071A520 /* RHR Watch AppUITests */,
@@ -109,6 +115,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				262123DB2CBD530E0071A520 /* RHR Watch App */,
+				2685F14C2CBFA094004F53B3 /* .github */,
 			);
 			name = "RHR Watch App";
 			packageProductDependencies = (
