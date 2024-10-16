@@ -10,9 +10,6 @@ on:
 jobs:
   build:
     runs-on: macos-15
-    strategy:
-        matrix:
-          device: ["Apple Watch Series 10 (46mm)"]
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -26,7 +23,7 @@ jobs:
             ${{ runner.os }}-spm-
       
       - name: Select Xcode 16.0
-        run: sudo xcode-select -s /Applications/Xcode_16.0.app
+        run: sudo xcode-select -s /Applications/Xcode_16.app
 
       - name: Check Xcode version
         run: xcodebuild -version
@@ -36,9 +33,9 @@ jobs:
 
       - name: Build
         run: |
-            xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,id=7E4F0B48-4606-4208-B6E1-A1FBCA93A4C5,OS=11.0,name=Apple Watch Series 10 (46mm)'
+            xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,OS=11.0,name=Apple Watch Series 10 (46mm)'
 
       - name: Test
         run: |
-            xcodebuild test -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,id=7E4F0B48-4606-4208-B6E1-A1FBCA93A4C5,OS=11.0,name=Apple Watch Series 10 (46mm)'
+            xcodebuild test -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,OS=11.0,name=Apple Watch Series 10 (46mm)'
 
