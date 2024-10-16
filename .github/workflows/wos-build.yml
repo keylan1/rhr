@@ -18,9 +18,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: .build
-          key: $-spm-$
+          key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
           restore-keys: |
-            $-spm-
+            ${{ runner.os }}-spm-
       
       - name: Select Xcode 16
         run: sudo xcode-select -s /Applications/Xcode_16.app
@@ -30,8 +30,8 @@ jobs:
 
       - name: Build
         run: |
-            xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm),OS=latest'
+            xcodebuild clean build -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=latest'
     
       - name: Test
         run: |
-            xcodebuild test -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,name=Apple Watch Series 9 (45mm),OS=latest'
+            xcodebuild test -project RHR.xcodeproj -scheme 'RHR Watch App' -destination 'platform=watchOS Simulator,name=Apple Watch Series 10 (46mm),OS=latest'
