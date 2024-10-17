@@ -21,11 +21,12 @@ struct ToDoItem: Identifiable, Codable {
 class DataModel: ObservableObject {
     @Published var items: [ToDoItem] = []
     private let itemsKey = "todoItems"
+    private let defaults: UserDefaults
     
-    init() {
-        print("Initializing DataModel")
-        loadItems()
-    }
+    init(defaults: UserDefaults = .standard) {
+            self.defaults = defaults
+            loadItems()
+        }
     
     func addItem(_ title: String) {
         guard !title.isEmpty else {return}
@@ -50,8 +51,8 @@ class DataModel: ObservableObject {
     func saveItems(completion: (() -> Void)? = nil) {
         do {
             let data = try JSONEncoder().encode(items)
-            UserDefaults.standard.set(data, forKey: itemsKey)
-            UserDefaults.standard.synchronize()
+            defaults.set(data, forKey: itemsKey)
+            defaults.synchronize()
             print("Saved items: \(items)")
         } catch {
             print("Failed to save items: \(error)")
@@ -59,7 +60,7 @@ class DataModel: ObservableObject {
     }
     
     private func loadItems() {
-           guard let data = UserDefaults.standard.data(forKey: itemsKey) else {
+        guard let data = defaults.data(forKey: itemsKey) else {
                print("No data found in UserDefaults for key: \(itemsKey)")
                return
            }

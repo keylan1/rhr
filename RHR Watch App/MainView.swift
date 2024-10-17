@@ -52,7 +52,7 @@ struct MainView: View {
     }
     
     private func deleteItems(at offsets: IndexSet) {
-          model.deleteItem(at: offsets)
+        model.items.remove(atOffsets: offsets)
       }
 }
 
