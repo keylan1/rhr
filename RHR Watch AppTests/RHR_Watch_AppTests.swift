@@ -18,7 +18,6 @@ extension DataModel {
 
 struct RHR_Watch_AppTests {
 
-
     func resetTestDefaults(domain: String = "TestSuite") {
         let defaults = UserDefaults(suiteName: domain)!
         defaults.removePersistentDomain(forName: domain)
@@ -34,7 +33,6 @@ struct RHR_Watch_AppTests {
         UserDefaults(suiteName: domain)!.synchronize()
     }
 
-
     @Test func testAddItem() throws {
         resetTestDefaults(domain: "TestSuite")
         resetList(domain: "TestSuite")
@@ -47,9 +45,7 @@ struct RHR_Watch_AppTests {
         resetList()
     }
     
-    
-    
-    
+   
     @Test
     func testToggleCompletion() throws {
         resetTestDefaults(domain: "TestSuite")
@@ -65,8 +61,7 @@ struct RHR_Watch_AppTests {
         resetList()
     }
     
-
-    
+ 
     @Test
     func testMultipleItems() throws {
         resetTestDefaults(domain: "TestSuite")
@@ -94,7 +89,6 @@ struct RHR_Watch_AppTests {
         resetTestDefaults()
         resetList()
     }
-
     
     @Test
     func testDeleteItem() throws {
@@ -135,9 +129,7 @@ struct RHR_Watch_AppTests {
         // Force save to UserDefaults
         newModel.saveItems()
 
-
-
-        
+    
         // Create a new model to simulate app restart
         let model = DataModel(forTesting: true, domain: domain)
         print("New model created, items: \(model.items)")

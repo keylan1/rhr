@@ -59,18 +59,18 @@ class RHR_Watch_AppUITests: XCTestCase {
         let textField = app.textFields["New item"]
         XCTAssertTrue(textField.waitForExistence(timeout: 10), "Text field did not appear")
         print("Text field appeared")
+        sleep(1)
         
         // Tap the text field to open the keyboard screen
         textField.tap()
-        //Thread.sleep(forTimeInterval: 0.5)
-        //textField.tap()
         print("Text field tapped, should open keyboard screen")
         
         // Wait for the keyboard to appear
         let keyboard = app.keyboards.firstMatch
-        XCTAssertTrue(keyboard.waitForExistence(timeout: 10), "Keyboard did not appear")
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 5), "Keyboard did not appear")
         print("Keyboard appeared")
         
+        // Type the task name
         let newItemTitle = "Task"
         for char in newItemTitle {
             
@@ -82,6 +82,7 @@ class RHR_Watch_AppUITests: XCTestCase {
             Thread.sleep(forTimeInterval: 0.5) // Wait a bit between key taps
         }
         print("Attempted to type: \(newItemTitle)")
+        
         // Tap the "Done"/"Fertig" button on the keyboard
         let doneButton = app.buttons["Fertig"]
         XCTAssertTrue(doneButton.waitForExistence(timeout: 5))
@@ -104,8 +105,8 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Verify the new item appears in the list
         let newItemText = app.staticTexts[newItemTitle]
-        XCTAssertTrue(newItemText.waitForExistence(timeout: 5), "New item '\(newItemTitle)' not found in the list")
-        print("New item '\(newItemTitle)' found in the list")
+        XCTAssertTrue(newItemText.waitForExistence(timeout: 5), "New item \(newItemTitle) not found in the list")
+        print("New item \(newItemTitle) found in the list")
     }
         
    func testToggleItemCompletion() throws {
@@ -150,9 +151,7 @@ class RHR_Watch_AppUITests: XCTestCase {
             let deleteCoordinate = app.coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
                 .withOffset(CGVector(dx: deleteX, dy: deleteY))
             deleteCoordinate.tap()
-            
-            //sleep(1)
-            
+
             // Verify the item has been deleted
             XCTAssertFalse(addedItem.exists, "Item should have been deleted")
         }
