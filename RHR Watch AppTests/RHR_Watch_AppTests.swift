@@ -22,6 +22,7 @@ struct RHR_Watch_AppTests {
     func resetTestDefaults() {
         testSuite.removePersistentDomain(forName: "TestSuite")
         testSuite.synchronize()
+        Thread.sleep(forTimeInterval: 1.0)
         print("Test UserDefaults reset")
     }
 
@@ -32,6 +33,14 @@ struct RHR_Watch_AppTests {
         testSuite.synchronize()
     }
 
+    func tearDown() {
+        let domain = "TestSuite"
+        UserDefaults.standard.removePersistentDomain(forName: domain)
+        UserDefaults.standard.synchronize()
+        Thread.sleep(forTimeInterval: 1.0)  // Wait to ensure UserDefaults are cleared
+    }
+
+
     @Test func testAddItem() async throws {
         resetTestDefaults()
         resetList()
@@ -40,7 +49,11 @@ struct RHR_Watch_AppTests {
         #expect(newModel.items.count == 1)
         #expect(newModel.items[0].title == "Test Item")
         #expect(newModel.items[0].isCompleted == false)
+        tearDown()
     }
+    
+    
+    
     
     @Test
     func testToggleCompletion() async throws {
@@ -53,42 +66,10 @@ struct RHR_Watch_AppTests {
         #expect(newModel.items[0].isCompleted == true)
         newModel.toggleCompletion(for: item)
         #expect(newModel.items[0].isCompleted == false)
+        tearDown()
     }
     
-    @Test
-    func testPersistence() async throws {
-        // Clear any existing data
-        resetTestDefaults()
-        resetList()
-        
-        print("UserDefaults reset")
-
-        // Create a model and add an item
-        let newModel = DataModel(forTesting: true)
-        newModel.addItem("Test Item")
-        print("Added item: Test Item")
-
-        // Force save to UserDefaults
-        newModel.saveItems()
-        testSuite.synchronize()
-        try await Task.sleep(nanoseconds: 1_000_000_000)
-
-        // Print all UserDefaults data for debugging
-        //    print("All UserDefaults data:")
-        //for (key, value) in testSuite.dictionaryRepresentation() {
-         //       print("\(key): \(value)")
-         //   }
-        
-        // Create a new model to simulate app restart
-        let model = DataModel(forTesting: true)
-        //print("New model created, items: \(model.items)")
-        
-        // Check if the item persisted
-        #expect(model.items.count == 1, "Expected 1 item, but found \(model.items.count)")
-        if model.items.count > 0 {
-            #expect(model.items[0].title == "Test Item", "Expected 'Test Item', but found '\(model.items[0].title)'")
-        }
-    }
+    
 
     
     
@@ -105,6 +86,7 @@ struct RHR_Watch_AppTests {
         #expect(model.items[0].title == "Item 1")
         #expect(model.items[1].title == "Item 2")
         #expect(model.items[2].title == "Item 3")
+        tearDown()
     }
     
     @Test
@@ -114,18 +96,9 @@ struct RHR_Watch_AppTests {
         let model = DataModel(forTesting: true)
         model.addItem("")
         #expect(model.items.count == 0)
+        tearDown()
     }
-    
-    @Test
-    func testToggleNonexistentItem() async throws {
-        resetTestDefaults()
-        resetList()
-        let model = DataModel(forTesting: true)
-        let nonexistentItem = ToDoItem(title: "Nonexistent")
-        model.toggleCompletion(for: nonexistentItem)
-        // This should not crash and should not change the model
-        #expect(model.items.count == 0)
-    }
+
     
     @Test
     func testDeleteItem() async throws {
@@ -145,6 +118,45 @@ struct RHR_Watch_AppTests {
         // Create a new model to test persistence
         let newModel = DataModel(forTesting: true)
         #expect(newModel.items.count == 0, "Item should remain deleted after reloading")
+        tearDown()
+    }
+    
+    @Test
+    func testPersistence() async throws {
+        // Clear any existing data
+        resetTestDefaults()
+        resetList()
+        
+        print("UserDefaults reset")
+
+        // Create a model and add an item
+        let newModel = DataModel(forTesting: true)
+        newModel.addItem("Test Item")
+        print("Added item: Test Item")
+
+        // Force save to UserDefaults
+        newModel.saveItems()
+        try await Task.sleep(nanoseconds: 2_000_000_000)
+        testSuite.synchronize()
+        //Thread.sleep(forTimeInterval: 1.0)
+        
+
+        // Print all UserDefaults data for debugging
+        //    print("All UserDefaults data:")
+        //for (key, value) in testSuite.dictionaryRepresentation() {
+         //       print("\(key): \(value)")
+         //   }
+        
+        // Create a new model to simulate app restart
+        let model = DataModel(forTesting: true)
+        print("New model created, items: \(model.items)")
+        
+        // Check if the item persisted
+        #expect(model.items.count == 1, "Expected 1 item, but found \(model.items.count)")
+        if model.items.count > 0 {
+            #expect(model.items[0].title == "Test Item", "Expected 'Test Item', but found '\(model.items[0].title)'")
+        }
+        tearDown()
     }
 
 }

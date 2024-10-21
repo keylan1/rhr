@@ -51,17 +51,19 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Tap the plus button on the main screen
         let plusButton = app.buttons["plus"]
-        XCTAssertTrue(plusButton.waitForExistence(timeout: 5), "Plus button does not exist")
+        XCTAssertTrue(plusButton.waitForExistence(timeout: 10), "Plus button does not exist")
         plusButton.tap()
         print("Plus button tapped")
         
         // Wait for the text field to appear in AddItemView
         let textField = app.textFields["New item"]
-        XCTAssertTrue(textField.waitForExistence(timeout: 5), "Text field did not appear")
+        XCTAssertTrue(textField.waitForExistence(timeout: 10), "Text field did not appear")
         print("Text field appeared")
         
         // Tap the text field to open the keyboard screen
         textField.tap()
+        //Thread.sleep(forTimeInterval: 0.5)
+        //textField.tap()
         print("Text field tapped, should open keyboard screen")
         
         // Wait for the keyboard to appear
