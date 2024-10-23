@@ -75,7 +75,14 @@ class RHR_Watch_AppUITests: XCTestCase {
         for char in newItemTitle {
             
             if char == " " {
-                keyboard.keys["Leerzeichen"].tap() // "Leerzeichen" is "space" in German
+                // Check for both "Leerzeichen" (German) or "space" (English)
+                        if keyboard.keys["Leerzeichen"].exists {
+                            keyboard.keys["Leerzeichen"].tap()
+                        } else if keyboard.keys["space"].exists {
+                            keyboard.keys["space"].tap()
+                        } else {
+                            XCTFail("Space key (Leerzeichen/space) not found")
+                        }//keyboard.keys["Leerzeichen"].tap() // "Leerzeichen" is "space" in German
             } else {
                 keyboard.keys[String(char)].tap()
             }
@@ -84,7 +91,10 @@ class RHR_Watch_AppUITests: XCTestCase {
         print("Attempted to type: \(newItemTitle)")
         
         // Tap the "Done"/"Fertig" button on the keyboard
-        let doneButton = app.buttons["Fertig"]
+        var doneButton = app.buttons["Fertig"]
+        if !doneButton.exists {
+            doneButton = app.buttons["Done"]
+        }
         XCTAssertTrue(doneButton.waitForExistence(timeout: 10))
         doneButton.tap()
         // "Fertig" is "Done" in German
