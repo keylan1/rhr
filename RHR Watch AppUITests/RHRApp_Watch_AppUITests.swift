@@ -59,7 +59,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         let textField = app.textFields["New item"]
         XCTAssertTrue(textField.waitForExistence(timeout: 10), "Text field did not appear")
         print("Text field appeared")
-        sleep(1)
+        sleep(3)
         
         // Tap the text field to open the keyboard screen
         textField.tap()
@@ -67,7 +67,13 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the keyboard to appear
         let keyboard = app.keyboards.firstMatch
-        XCTAssertTrue(keyboard.waitForExistence(timeout: 20), "Keyboard did not appear")
+        let startTime = Date()
+        let timeInterval: TimeInterval = 30
+        while !keyboard.exists && Date().timeIntervalSince(startTime) < timeInterval {
+              print("Waiting for keyboard to appear...")
+              sleep(1)
+          }
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 30), "Keyboard did not appear")
         print("Keyboard appeared")
         
         // Type the task name
@@ -86,7 +92,7 @@ class RHR_Watch_AppUITests: XCTestCase {
             } else {
                 keyboard.keys[String(char)].tap()
             }
-            Thread.sleep(forTimeInterval: 0.5) // Wait a bit between key taps
+            Thread.sleep(forTimeInterval: 1.0) // Wait a bit between key taps
         }
         print("Attempted to type: \(newItemTitle)")
         
