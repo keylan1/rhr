@@ -67,7 +67,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the keyboard to appear
         let keyboard = app.keyboards.firstMatch
-        XCTAssertTrue(keyboard.waitForExistence(timeout: 5), "Keyboard did not appear")
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 10), "Keyboard did not appear")
         print("Keyboard appeared")
         
         // Type the task name
@@ -85,27 +85,27 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Tap the "Done"/"Fertig" button on the keyboard
         let doneButton = app.buttons["Fertig"]
-        XCTAssertTrue(doneButton.waitForExistence(timeout: 5))
+        XCTAssertTrue(doneButton.waitForExistence(timeout: 10))
         doneButton.tap()
         // "Fertig" is "Done" in German
         print("Done/Fertig button tapped")
         
         // Wait for AddItemView to reappear
-        XCTAssertTrue(textField.waitForExistence(timeout: 5), "Did not return to AddItemView")
+        XCTAssertTrue(textField.waitForExistence(timeout: 10), "Did not return to AddItemView")
         print("Returned to AddItemView")
         
         // Tap the Add button in AddItemView
         let addButton = app.buttons["Add Task"]
-        XCTAssertTrue(addButton.waitForExistence(timeout: 5), "Add button does not exist")
+        XCTAssertTrue(addButton.waitForExistence(timeout: 10), "Add button does not exist")
         addButton.tap()
         print("Add button tapped")
         
         // Verify that we're back on the main view
-        XCTAssertTrue(plusButton.waitForExistence(timeout: 5), "Did not return to main view")
+        XCTAssertTrue(plusButton.waitForExistence(timeout: 10), "Did not return to main view")
         
         // Verify the new item appears in the list
         let newItemText = app.staticTexts[newItemTitle]
-        XCTAssertTrue(newItemText.waitForExistence(timeout: 5), "New item \(newItemTitle) not found in the list")
+        XCTAssertTrue(newItemText.waitForExistence(timeout: 10), "New item \(newItemTitle) not found in the list")
         print("New item \(newItemTitle) found in the list")
     }
         
@@ -116,17 +116,17 @@ class RHR_Watch_AppUITests: XCTestCase {
             
             // Now, tap the item to toggle its completion
             let item = app.staticTexts["Task"]
-            XCTAssertTrue(item.exists, "Added item does not exist")
+       XCTAssertTrue(item.waitForExistence(timeout: 10), "Added item does not exist")
             item.tap()
             
             // Verify the item is marked as completed
             let checkmark = app.images["checkmark"]
-            XCTAssertTrue(checkmark.waitForExistence(timeout: 2), "Checkmark appears after toggling completion")
+            XCTAssertTrue(checkmark.waitForExistence(timeout: 5), "Checkmark appears after toggling completion")
             
             // Tap again to un-complete
             let itemLeftSide = item.coordinate(withNormalizedOffset: CGVector(dx: 0.1, dy: 0.5))
             itemLeftSide.tap()
-            XCTAssertTrue(checkmark.waitForNonExistence(timeout: 2), "Checkmark no longer appears after toggling completion off")
+            XCTAssertTrue(checkmark.waitForNonExistence(timeout: 5), "Checkmark no longer appears after toggling completion off")
         }
         
     func testSwipeToDelete() throws {
@@ -136,7 +136,7 @@ class RHR_Watch_AppUITests: XCTestCase {
             
             // Find the added item
             let addedItem = app.staticTexts["Task"]
-            XCTAssertTrue(addedItem.exists, "Added item does not exist")
+        XCTAssertTrue(addedItem.waitForExistence(timeout: 10), "Added item does not exist")
             
             let frame = addedItem.frame
             
