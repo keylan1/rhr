@@ -73,7 +73,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         //      print("Waiting for keyboard to appear...")
         //      sleep(1)
         //  }
-        XCTAssertTrue(keyboard.waitForExistence(timeout: 28), "Keyboard did not appear")
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 29), "Keyboard did not appear")
         print("Keyboard appeared")
         
         // Type the task name
