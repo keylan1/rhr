@@ -57,7 +57,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the text field to appear in AddItemView
         let textField = app.textFields["New item"]
-        XCTAssertTrue(textField.waitForExistence(timeout: 20), "Text field did not appear")
+        XCTAssertTrue(textField.waitForExistence(timeout: 15), "Text field did not appear")
         print("Text field appeared")
         sleep(1)
         
