@@ -57,12 +57,13 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the text field to appear in AddItemView
         let textField = app.textFields["New item"]
-        XCTAssertTrue(textField.waitForExistence(timeout: 15), "Text field did not appear")
+        XCTAssertTrue(textField.waitForExistence(timeout: 10), "Text field did not appear")
         print("Text field appeared")
         sleep(1)
         
         // Tap the text field to open the keyboard screen
         textField.tap()
+        Thread.sleep(forTimeInterval: 2) // Wait for 2 seconds for the keyboard to appear
         print("Text field tapped, should open keyboard screen")
         
         // Wait for the keyboard to appear
@@ -74,18 +75,18 @@ class RHR_Watch_AppUITests: XCTestCase {
         let newItemTitle = "Task"
         for char in newItemTitle {
             
-            if char == " " {
+          //  if char == " " {
                 // Check for both "Leerzeichen" (German) or "space" (English)
-                        if keyboard.keys["Leerzeichen"].exists {
-                            keyboard.keys["Leerzeichen"].tap()
-                        } else if keyboard.keys["space"].exists {
-                            keyboard.keys["space"].tap()
-                        } else {
-                            XCTFail("Space key (Leerzeichen/space) not found")
-                        }
-            } else {
+            //            if keyboard.keys["Leerzeichen"].exists {
+            //                keyboard.keys["Leerzeichen"].tap()
+              //          } else if keyboard.keys["space"].exists {
+              //              keyboard.keys["space"].tap()
+              //          } else {
+              //              XCTFail("Space key (Leerzeichen/space) not found")
+             //           }
+           // } else {
                 keyboard.keys[String(char)].tap()
-            }
+           // }
             Thread.sleep(forTimeInterval: 1.0) // Wait a bit between key taps
         }
         print("Attempted to type: \(newItemTitle)")
