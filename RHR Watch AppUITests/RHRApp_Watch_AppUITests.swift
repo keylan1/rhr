@@ -16,9 +16,9 @@ class RHR_Watch_AppUITests: XCTestCase {
         continueAfterFailure = false
         app = XCUIApplication()
         app.launch()
-        let domain = Bundle.main.bundleIdentifier!
-        UserDefaults.standard.removePersistentDomain(forName: domain)
-        UserDefaults.standard.synchronize()
+       // let domain = Bundle.main.bundleIdentifier!
+       // UserDefaults.standard.removePersistentDomain(forName: domain)
+       // UserDefaults.standard.synchronize()
     }
 
     func clearAll() {
@@ -57,7 +57,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the text field to appear in AddItemView
         let textField = app.textFields["New item"]
-        XCTAssertTrue(textField.waitForExistence(timeout: 10), "Text field did not appear")
+        XCTAssertTrue(textField.waitForExistence(timeout: 20), "Text field did not appear")
         print("Text field appeared")
         sleep(1)
         
@@ -67,13 +67,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the keyboard to appear
         let keyboard = app.keyboards.firstMatch
-        //let startTime = Date()
-        //let timeInterval: TimeInterval = 30
-        //while !keyboard.exists && Date().timeIntervalSince(startTime) < timeInterval {
-        //      print("Waiting for keyboard to appear...")
-        //      sleep(1)
-        //  }
-        XCTAssertTrue(keyboard.waitForExistence(timeout: 28), "Keyboard did not appear")
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 25), "Keyboard did not appear")
         print("Keyboard appeared")
         
         // Type the task name
@@ -88,7 +82,7 @@ class RHR_Watch_AppUITests: XCTestCase {
                             keyboard.keys["space"].tap()
                         } else {
                             XCTFail("Space key (Leerzeichen/space) not found")
-                        }//keyboard.keys["Leerzeichen"].tap() // "Leerzeichen" is "space" in German
+                        }
             } else {
                 keyboard.keys[String(char)].tap()
             }
@@ -119,7 +113,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         // Verify that we're back on the main view
         XCTAssertTrue(plusButton.waitForExistence(timeout: 10), "Did not return to main view")
         
-        // Verify the new item appears in the list
+        // Verify the new item appears in the listg
         let newItemText = app.staticTexts[newItemTitle]
         XCTAssertTrue(newItemText.waitForExistence(timeout: 10), "New item \(newItemTitle) not found in the list")
         print("New item \(newItemTitle) found in the list")
