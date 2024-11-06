@@ -66,7 +66,7 @@ class RHR_Watch_AppUITests: XCTestCase {
         
         // Wait for the keyboard to appear
         let keyboard = app.keyboards.firstMatch
-        XCTAssertTrue(keyboard.waitForExistence(timeout: 30), "Keyboard did not appear")
+        XCTAssertTrue(keyboard.waitForExistence(timeout: 25), "Keyboard did not appear")
         print("Keyboard appeared")
         
         // Type the task name
