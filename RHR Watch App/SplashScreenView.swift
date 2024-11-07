@@ -16,7 +16,7 @@ struct SplashScreenView: View {
             
             //Text("Loading...").font(.title3)
             ProgressView().scaleEffect(1.75)
-        }
+        }.border(Color .white, width: 2)
     }
 }
 
