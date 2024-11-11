@@ -9,8 +9,8 @@ import SwiftUI
 
 struct AppCoordinator: View {
     //Change to HealthModel() when no longer mocking data
-    @StateObject private var healthModel = MockHealthModel()
-    @State private var isShowingSplash = true
+    @StateObject var healthModel = MockHealthModel()
+    @State var isShowingSplash = true
     
     var body: some View {
         Group {

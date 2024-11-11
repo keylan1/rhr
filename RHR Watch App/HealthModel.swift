@@ -17,8 +17,7 @@ class HealthModel: HealthModelProtocol {
         // The quantity type to read from the health store.
         let rhr = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
         
-        
-        // Request authorization for those quantity types.
+        // Request authorization for those quantity types. in a do catch and not try? await because you want the error
         do {
             try await
             healthStore.requestAuthorization(toShare: [], read: [rhr])

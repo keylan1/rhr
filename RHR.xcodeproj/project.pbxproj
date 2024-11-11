@@ -34,6 +34,16 @@
 		262123F32CBD53110071A520 /* RHR Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RHR Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		26CC2F6E2CE21D290099C8C7 /* Exceptions for "RHR Watch AppUITests" folder in "RHR Watch AppUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				RHRApp_Watch_AppUITests.swift,
+			);
+			target = 262123F22CBD53110071A520 /* RHR Watch AppUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		262123DB2CBD530E0071A520 /* RHR Watch App */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -47,6 +57,9 @@
 		};
 		262123F62CBD53110071A520 /* RHR Watch AppUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				26CC2F6E2CE21D290099C8C7 /* Exceptions for "RHR Watch AppUITests" folder in "RHR Watch AppUITests" target */,
+			);
 			path = "RHR Watch AppUITests";
 			sourceTree = "<group>";
 		};

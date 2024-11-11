@@ -15,7 +15,7 @@ struct SplashScreenView: View {
             Text("DRHR App").bold().font(.title2).padding(15)
             
             //Text("Loading...").font(.title3)
-            ProgressView().scaleEffect(1.75)
+            ProgressView().accessibilityIdentifier("LoadingIndicator").scaleEffect(1.75)
         }
     }
 }

@@ -8,11 +8,10 @@
 import SwiftUI
 
 @main
-struct RHR_Watch_AppApp: App {
-    @State private var newItemTitle = ""
+struct RHR_Watch_App: App {
     var body: some Scene {
         WindowGroup {
-            MainView()
+            AppCoordinator()
         }
     }
 }
