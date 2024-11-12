@@ -13,8 +13,7 @@ struct SplashScreenView: View {
         VStack {
             Image(systemName: "heart")
             Text("DRHR App").bold().font(.title2).padding(15)
-            
-            //Text("Loading...").font(.title3)
+            Spacer()
             ProgressView().accessibilityIdentifier("LoadingIndicator").scaleEffect(1.75)
         }
     }
