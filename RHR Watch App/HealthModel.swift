@@ -31,5 +31,29 @@ class HealthModel: HealthModelProtocol {
             }
         }
     }
+    
+    func getRestingHeartRate() async throws -> Double {
+        //Doc says HKSampleType, but that's less used than HKObjectType which has factory methods
+        let rhr = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
+        
+        let query = HKSampleQuery(sampleType: rhr, predicate: nil, limit: 1, sortDescriptors: nil) {
+            query, results, error in
+            
+            guard let samples = results as? [HKQuantitySample] else {
+                // Handle any errors here.
+                return
+            }
+            //HKQuantitySample ] HKUnit
+            if let firstSample = samples.first {
+                
+            }
+            // The results come back on an anonymous background queue.
+            // Dispatch to the main queue before modifying the UI.
+            
+            DispatchQueue.main.async {
+                // Update the UI here.
+            }
+        }
+    }
 }
 
