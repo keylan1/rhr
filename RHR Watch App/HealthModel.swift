@@ -80,17 +80,26 @@ class HealthModel: HealthModelProtocol {
         
         let idealBaselineQuery = HKStatisticsCollectionQueryDescriptor(predicate: rhrIdealBaseline, options: .discreteAverage, anchorDate: endDate, intervalComponents: everyDay)
         
+        
+        
         if let minBaseline = try? await idealBaselineQuery.result(for: healthStore) {
+            var dailyRHRArray: [(date: Date, value: Double)] = []
+            var totalRHR: Double = 0
+            var averageRHR: Double = 0
             minBaseline.enumerateStatistics(from: idealStartDate, to: endDate) {
                 (statistics, stop) in
                 if let quantity = statistics.averageQuantity() {
                     let date = statistics.startDate
                     let value = quantity.doubleValue(for: HKUnit.count())
                     
-                    let dailyRHRArray = []
-                        //date.addDay(date: date, value: value)
+                    let daily = (date: date, value: value)
+                    
+                    dailyRHRArray.append(daily)
+                  
+                    totalRHR += daily.value
                 }
             }
+            averageRHR = totalRHR / Double(dailyRHRArray.count)
         } else {
             fatalError("Could not get min baseline")
             }
