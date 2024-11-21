@@ -56,32 +56,50 @@ class HealthModel: HealthModelProtocol {
         let baselineType = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
         
         //predicate for the sample data eg. 14 days min baseline
-        let calendar = Calendar(identifier: .gregorian)
+        let calendar = Calendar.current
         let today = calendar.startOfDay(for: Date())
         
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: today) else {
             fatalError("Could not create end date")
         }
         
-        guard let minStartDate = calendar.date(byAdding: .day, value: -14, to: endDate) else {
-            fatalError("Start date less than 14 days")
-        }
+        //guard let minStartDate = calendar.date(byAdding: .day, value: -14, to: endDate) else {
+        //    fatalError("Start date less than 14 days")
+        //}
         
         guard let idealStartDate = calendar.date(byAdding: .day, value: -45, to: endDate) else {
             fatalError("Start date less than 45 days")
         }
         
-        let minBaselineTime = HKQuery.predicateForSamples(withStart: minStartDate, end: endDate)
+        let idealBaselineTime = HKQuery.predicateForSamples(withStart: idealStartDate, end: endDate)
         
         // query descriptior
         let rhrType = HKQuantityType(.restingHeartRate)
-        let rhrMinBaseline = HKSamplePredicate.quantitySample(type: rhrType, predicate: minBaselineTime)
+        let rhrIdealBaseline = HKSamplePredicate.quantitySample(type: rhrType, predicate: idealBaselineTime)
         let everyDay = DateComponents(day: 1)
         
-        let minBaselineQuery = HKStatisticsCollectionQueryDescriptor(predicate: rhrMinBaseline, options: .discreteAverage, anchorDate: endDate, intervalComponents: everyDay)
+        let idealBaselineQuery = HKStatisticsCollectionQueryDescriptor(predicate: rhrIdealBaseline, options: .discreteAverage, anchorDate: endDate, intervalComponents: everyDay)
         
-        let minBaseline = try? await minBaselineQuery.result(for: healthStore)
-        let minBaselineValue = minBaseline(for: HKUnit(from: "count/min"))
+        if let minBaseline = try? await idealBaselineQuery.result(for: healthStore) {
+            minBaseline.enumerateStatistics(from: idealStartDate, to: endDate) {
+                (statistics, stop) in
+                if let quantity = statistics.averageQuantity() {
+                    let date = statistics.startDate
+                    let value = quantity.doubleValue(for: HKUnit.count())
+                    
+                    let dailyRHRArray = []
+                        //date.addDay(date: date, value: value)
+                }
+            }
+        } else {
+            fatalError("Could not get min baseline")
+            }
+        
+        //initialresultshandler where you process the information from the query
+        // calculate averageQuantity?
+        //store in variable or add function to calculate against daily rhr?
+        
+        
     }
 }
 
