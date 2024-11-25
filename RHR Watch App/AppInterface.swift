@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct AppInterface: View {
-    @ObservedObject var healthModel: HealthModel
+    @ObservedObject var healthModel: MockHealthModel
     @State private var dailyRestingHeartRate: Double?
-    @State private var status: String = "Normal"
+    @State private var status: String?
     @State private var counter: Int = 0
     
     var body: some View {
@@ -23,10 +23,11 @@ struct AppInterface: View {
             }
             Spacer()
             Text("Daily RHR: \(dailyRestingHeartRate?.formatted(.number) ?? "--"        )").accessibilityIdentifier("DailyRHRLabel")
-            Text("Status: \(status)").accessibilityIdentifier("StatusLabel").foregroundColor(status == "Normal" ? Color.green : (status == "Elevated" ? Color.yellow : Color.red))
+            Text("Status: \(status ?? "--")").accessibilityIdentifier("StatusLabel").foregroundColor(status == "Normal" ? Color.green : (status == "Elevated" ? Color.yellow : Color.red))
             Text("Counter: \(counter)").accessibilityIdentifier("CounterLabel") .foregroundColor(Color.gray.opacity(0.7))
         }
-        .onAppear(perform: fetchHeartRate)
+        .onAppear{fetchHeartRate()
+            fetchStatus()}
     }
     private func fetchHeartRate() {
         healthModel.getRestingHeartRate { rate in
@@ -35,8 +36,14 @@ struct AppInterface: View {
             }
         }
     }
+    private func fetchStatus() {
+        healthModel.compare {result in
+            DispatchQueue.main.async {
+                self.status =  result
+            }}
+    }
 }
 
 #Preview {
-    AppInterface(healthModel: HealthModel())
+    AppInterface(healthModel: MockHealthModel())
 }

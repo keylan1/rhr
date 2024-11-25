@@ -35,6 +35,7 @@ class HealthModel: HealthModelProtocol {
     func getRestingHeartRate(completion: @escaping (Double?) -> Void) {
         //Doc says HKSampleType, but that's less used than HKObjectType which has factory methods
         let rhr = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
+        var rhrValue: Double = 0
         
         let query = HKSampleQuery(sampleType: rhr, predicate: nil, limit: 1, sortDescriptors: nil) {
             query, results, error in
@@ -48,11 +49,11 @@ class HealthModel: HealthModelProtocol {
             //HKQuantitySample ] HKUnit
             let rhrValue = sample.quantity.doubleValue(for: HKUnit(from: "count/min"))
             completion(rhrValue)
-            }
-           healthStore.execute(query)
         }
+        healthStore.execute(query)
+    }
     
-    func getBaselineRHR() async {
+    func getBaselineRHR(completion: @escaping (Double?) -> Void) {
         let baselineType = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
         
         //predicate for the sample data eg. 14 days min baseline
@@ -74,42 +75,73 @@ class HealthModel: HealthModelProtocol {
         let idealBaselineTime = HKQuery.predicateForSamples(withStart: idealStartDate, end: endDate)
         
         // query descriptior
-        let rhrType = HKQuantityType(.restingHeartRate)
-        let rhrIdealBaseline = HKSamplePredicate.quantitySample(type: rhrType, predicate: idealBaselineTime)
+        //let rhrType = HKQuantityType(.restingHeartRate)
+        //let rhrIdealBaseline = HKSamplePredicate.quantitySample(type: rhrType, predicate: idealBaselineTime)
         let everyDay = DateComponents(day: 1)
         
-        let idealBaselineQuery = HKStatisticsCollectionQueryDescriptor(predicate: rhrIdealBaseline, options: .discreteAverage, anchorDate: endDate, intervalComponents: everyDay)
+        //let idealBaselineQuery = HKStatisticsCollectionQueryDescriptor(predicate: rhrIdealBaseline, options: .discreteAverage, anchorDate: endDate, intervalComponents: everyDay)
         
+        let idealBaselineQuery = HKStatisticsCollectionQuery(quantityType: baselineType, quantitySamplePredicate: idealBaselineTime, options: .discreteAverage, anchorDate: endDate, intervalComponents: everyDay)
+        //var baselineRHR: Double = 0
         
-        
-        if let minBaseline = try? await idealBaselineQuery.result(for: healthStore) {
+        //if let baseline = try? await idealBaselineQuery.result(for: healthStore) {
+        idealBaselineQuery.initialResultsHandler = {query, results, error in
+            if let error = error {
+                print("Error fetching baseline: \(error)")
+                completion(nil)
+                return
+            }
+            
+            guard let statsCollection = results else {
+                assertionFailure("No results from query")
+                return
+            }
             var dailyRHRArray: [(date: Date, value: Double)] = []
             var totalRHR: Double = 0
             var averageRHR: Double = 0
-            minBaseline.enumerateStatistics(from: idealStartDate, to: endDate) {
+            
+            statsCollection.enumerateStatistics(from: idealStartDate, to: endDate) {
                 (statistics, stop) in
                 if let quantity = statistics.averageQuantity() {
                     let date = statistics.startDate
-                    let value = quantity.doubleValue(for: HKUnit.count())
+                    let value = quantity.doubleValue(for: HKUnit(from: "count/min"))
                     
                     let daily = (date: date, value: value)
                     
                     dailyRHRArray.append(daily)
-                  
+                    
                     totalRHR += daily.value
                 }
             }
             averageRHR = totalRHR / Double(dailyRHRArray.count)
-        } else {
-            fatalError("Could not get min baseline")
+            let baselineRHR = averageRHR.rounded()
+            completion(baselineRHR)
+            //initialresultshandler where you process the information from the query
+            // calculate averageQuantity?
+            //store in variable or add function to calculate against daily rhr?
+        }
+        healthStore.execute(idealBaselineQuery)
+    }
+    
+    func compare(completion: @escaping(String?) -> Void) {
+        getRestingHeartRate {result in
+            if let restingHeartRate = result {
+                self.getBaselineRHR {baseline in
+                    if let baselineRHR = baseline {
+                        let diff = restingHeartRate - baselineRHR
+                        let toCompare = 0.1 * baselineRHR
+                        if diff >= toCompare {
+                            completion("Elevated")
+                        } else {
+                            completion("Normal")
+                        }
+                    } else {
+                        completion(nil)
+                    }
+                }
+            } else {
+                completion(nil)
             }
-        
-        //initialresultshandler where you process the information from the query
-        // calculate averageQuantity?
-        //store in variable or add function to calculate against daily rhr?
-        
-        
+        }
     }
 }
-
-
