@@ -31,11 +31,10 @@ class HealthModel: HealthModelProtocol {
             }
         }
     }
-    
+    //withCHeckedContinuation used to replace completion handlers to use the async/await method (newer) may be some issues with healthkit data though?
     func getRestingHeartRate(completion: @escaping (Double?) -> Void) {
         //Doc says HKSampleType, but that's less used than HKObjectType which has factory methods
         let rhr = HKObjectType.quantityType(forIdentifier: .restingHeartRate)!
-        var rhrValue: Double = 0
         
         let query = HKSampleQuery(sampleType: rhr, predicate: nil, limit: 1, sortDescriptors: nil) {
             query, results, error in

@@ -10,21 +10,16 @@ import Foundation
 class MockHealthModel: HealthModelProtocol {
     @Published var isAuthorized = false
     
-    //func requestAuthorization() async {
+    func requestAuthorization() async {
         // Simulate a delay
-    //    try? await Task.sleep(for: .seconds(2))
+        try? await Task.sleep(for: .seconds(2))
         
         // Simulate successful authorization
-     //   DispatchQueue.main.async {
-     //       self.isAuthorized = true
-     //   }
-    //}
-    
-    func requestAuthorization() async {
-            // Mock authorization as granted
-            isAuthorized = true
+        DispatchQueue.main.async {
+            self.isAuthorized = true
         }
-
+    }
+    
         func getRestingHeartRate(completion: @escaping (Double?) -> Void) {
             // Mock daily RHR (e.g., 65 bpm)
             completion(65.0)
