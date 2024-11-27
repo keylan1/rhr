@@ -15,3 +15,5 @@ import Foundation
 //Notification format and trigger
 
 //Trigger based on status
+
+//Create separate views to model notification and different statuses
