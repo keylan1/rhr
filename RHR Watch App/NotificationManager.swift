@@ -17,3 +17,5 @@ import Foundation
 //Trigger based on status
 
 //Create separate views to model notification and different statuses
+//Figure out how end to end testing with real data will work on the watch
+//Mock via tests and screen recording
