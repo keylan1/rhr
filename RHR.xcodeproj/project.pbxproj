@@ -421,7 +421,7 @@
 				INFOPLIST_FILE = "RHR-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = RHR;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Your resting heart rate is used to send analyze your condition and send you alerts regarding your health.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Your resting heart rate is used to analyze your condition and send you alerts regarding your health.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -455,7 +455,7 @@
 				INFOPLIST_FILE = "RHR-Watch-App-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = RHR;
 				INFOPLIST_KEY_LSApplicationCategoryType = "";
-				INFOPLIST_KEY_NSHealthShareUsageDescription = "Your resting heart rate is used to send analyze your condition and send you alerts regarding your health.";
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Your resting heart rate is used to analyze your condition and send you alerts regarding your health.";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				INFOPLIST_KEY_WKWatchOnly = YES;
 				LD_RUNPATH_SEARCH_PATHS = (

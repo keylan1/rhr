@@ -10,6 +10,7 @@ import SwiftUI
 struct AppCoordinator: View {
     //Change to HealthModel() when no longer mocking data
     @StateObject var healthModel = MockHealthModel()
+    @StateObject var notificationManager = MockNotificationManager()
     @State var isShowingSplash = true
     
     var body: some View {
@@ -23,6 +24,7 @@ struct AppCoordinator: View {
             }
         }
         .task {
+            await notificationManager.checkNotificationStatus()
             await healthModel.requestAuthorization()
             try? await Task.sleep(for: .seconds(2))
             

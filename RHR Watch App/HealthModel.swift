@@ -8,7 +8,7 @@
 import Foundation
 import HealthKit
 
-class HealthModel: HealthModelProtocol {
+class HealthModel: HealthModelProtocol {    
     let healthStore = HKHealthStore()
     @Published var isAuthorized = false
     
@@ -60,7 +60,8 @@ class HealthModel: HealthModelProtocol {
         let today = calendar.startOfDay(for: Date())
         
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: today) else {
-            fatalError("Could not create end date")
+            print("Could not create end date")
+            return
         }
         
         //guard let minStartDate = calendar.date(byAdding: .day, value: -14, to: endDate) else {
@@ -68,7 +69,8 @@ class HealthModel: HealthModelProtocol {
         //}
         
         guard let idealStartDate = calendar.date(byAdding: .day, value: -45, to: endDate) else {
-            fatalError("Start date less than 45 days")
+            print("Start date less than 45 days")
+            return
         }
         
         let idealBaselineTime = HKQuery.predicateForSamples(withStart: idealStartDate, end: endDate)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UserNotifications
 
 class MockHealthModel: HealthModelProtocol {
     @Published var isAuthorized = false
@@ -19,7 +20,7 @@ class MockHealthModel: HealthModelProtocol {
             self.isAuthorized = true
         }
     }
-    
+
         func getRestingHeartRate(completion: @escaping (Double?) -> Void) {
             // Mock daily RHR (e.g., 65 bpm)
             completion(65.0)
@@ -34,4 +35,25 @@ class MockHealthModel: HealthModelProtocol {
             // Mock comparison result (e.g., "Elevated" or "Normal")
             completion("Elevated")
         }
+}
+
+class MockNotificationManager: NSObject, ObservableObject {
+    @Published var isNotificationAuthorized = false
+    let notificationCenter = UNUserNotificationCenter.current()
+    func requestNotificationAuth() async {
+        isNotificationAuthorized = true
+    }
+    func checkNotificationStatus() async {
+        let settings = await notificationCenter.notificationSettings()
+        switch settings.authorizationStatus {
+        case .authorized:
+            isNotificationAuthorized = true
+        case .denied, .notDetermined:
+            await requestNotificationAuth()
+        case .provisional:
+            await requestNotificationAuth()
+        @unknown default:
+            await requestNotificationAuth()
+        }
+    }
 }
