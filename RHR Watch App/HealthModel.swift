@@ -11,6 +11,7 @@ import HealthKit
 class HealthModel: HealthModelProtocol {    
     let healthStore = HKHealthStore()
     @Published var isAuthorized = false
+    var notificationManager = NotificationManager()
     
     // Request authorization to access HealthKit.
     func requestAuthorization() async {
@@ -132,8 +133,14 @@ class HealthModel: HealthModelProtocol {
                         let diff = restingHeartRate - baselineRHR
                         let toCompare = 0.1 * baselineRHR
                         if diff >= toCompare {
+                            Task {
+                                await self.notificationManager.illNotification()
+                            }
                             completion("Elevated")
                         } else {
+                            Task {
+                                await self.notificationManager.normalNotification()
+                            }
                             completion("Normal")
                         }
                     } else {

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AppInterface: View {
-    @ObservedObject var healthModel: MockHealthModel
+    @ObservedObject var healthModel: HealthModel
     @State private var dailyRestingHeartRate: Double?
     @State private var status: String?
     @State private var counter: Int = 0
@@ -45,5 +45,5 @@ struct AppInterface: View {
 }
 
 #Preview {
-    AppInterface(healthModel: MockHealthModel())
+    AppInterface(healthModel: HealthModel())
 }

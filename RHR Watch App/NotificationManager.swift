@@ -73,14 +73,15 @@ class NotificationManager: NSObject, ObservableObject {
             print("Error: \(error.localizedDescription)")
         }
     }
+    
+    func clearBadge() {
+        
+    }
 }
-//Request auth
+// Add badge to notifcation functions
+// Add actions for what to do with the local notificaionts
 
-//Check notification status
-
-//Notification format and trigger
-
-//Trigger based on status
+//Trigger based on status in COMPARE FUNC HEALTHMODEL
 
 //Create separate views to model notification and different statuses
 //Figure out how end to end testing with real data will work on the watch
