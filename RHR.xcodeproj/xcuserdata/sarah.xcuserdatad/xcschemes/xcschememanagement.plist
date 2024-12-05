@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>RHR Watch App 1.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
 		<key>RHR Watch App.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -12,6 +17,11 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>262123D82CBD530E0071A520</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>262123E82CBD53110071A520</key>
 		<dict>
 			<key>primary</key>
