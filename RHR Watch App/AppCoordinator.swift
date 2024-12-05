@@ -17,7 +17,7 @@ struct AppCoordinator: View {
             if isShowingSplash {
                 SplashScreenView()
             } else if healthModel.isAuthorized {
-                AppInterface()
+                AppInterface(healthModel: healthModel)
             } else {
                 Text("HealthKit authorization not granted. Check settings.")
             }

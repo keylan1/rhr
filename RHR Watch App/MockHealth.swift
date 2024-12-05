@@ -19,4 +19,19 @@ class MockHealthModel: HealthModelProtocol {
             self.isAuthorized = true
         }
     }
+    
+        func getRestingHeartRate(completion: @escaping (Double?) -> Void) {
+            // Mock daily RHR (e.g., 65 bpm)
+            completion(65.0)
+        }
+
+        func getBaselineRHR(completion: @escaping (Double?) -> Void) {
+            // Mock baseline RHR (e.g., 60 bpm)
+            completion(60.0)
+        }
+
+        func compare(completion: @escaping (String?) -> Void) {
+            // Mock comparison result (e.g., "Elevated" or "Normal")
+            completion("Elevated")
+        }
 }
