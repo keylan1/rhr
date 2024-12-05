@@ -8,9 +8,10 @@
 import SwiftUI
 
 struct AppInterface: View {
-    @State private var dailyRestingHeartRate: Int = 0
-        @State private var status: String = "Normal"
-        @State private var counter: Int = 0
+    @ObservedObject var healthModel: HealthModel
+    @State private var dailyRestingHeartRate: Double?
+    @State private var status: String = "Normal"
+    @State private var counter: Int = 0
     
     var body: some View {
         VStack (alignment: .leading, spacing: 15) {
@@ -21,13 +22,21 @@ struct AppInterface: View {
                                     
             }
             Spacer()
-            Text("Daily RHR: \(dailyRestingHeartRate)").accessibilityIdentifier("DailyRHRLabel")
+            Text("Daily RHR: \(dailyRestingHeartRate?.formatted(.number) ?? "--"        )").accessibilityIdentifier("DailyRHRLabel")
             Text("Status: \(status)").accessibilityIdentifier("StatusLabel").foregroundColor(status == "Normal" ? Color.green : (status == "Elevated" ? Color.yellow : Color.red))
             Text("Counter: \(counter)").accessibilityIdentifier("CounterLabel") .foregroundColor(Color.gray.opacity(0.7))
+        }
+        .onAppear(perform: fetchHeartRate)
+    }
+    private func fetchHeartRate() {
+        healthModel.getRestingHeartRate { rate in
+            DispatchQueue.main.async {
+                self.dailyRestingHeartRate = rate
+            }
         }
     }
 }
 
 #Preview {
-    AppInterface()
+    AppInterface(healthModel: HealthModel())
 }

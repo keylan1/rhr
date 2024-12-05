@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AppCoordinator: View {
     //Change to HealthModel() when no longer mocking data
-    @StateObject var healthModel = MockHealthModel()
+    @StateObject var healthModel = HealthModel()
     @State var isShowingSplash = true
     
     var body: some View {
@@ -17,7 +17,7 @@ struct AppCoordinator: View {
             if isShowingSplash {
                 SplashScreenView()
             } else if healthModel.isAuthorized {
-                AppInterface()
+                AppInterface(healthModel: healthModel)
             } else {
                 Text("HealthKit authorization not granted. Check settings.")
             }
