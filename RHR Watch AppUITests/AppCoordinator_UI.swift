@@ -54,4 +54,26 @@ final class AppCoordinator_UI: XCTestCase {
         XCTAssertTrue(app.staticTexts["StatusLabel"].waitForExistence(timeout: 3), "'Status:' label should be displayed.")
         XCTAssertTrue(app.staticTexts["CounterLabel"].waitForExistence(timeout: 3), "'Counter:' label should be displayed.")
     }
+    
+    func testValuesSeen() throws {
+        let app = XCUIApplication()
+        app.launch()
+        
+        print(app.debugDescription)
+
+        let appInterface = app.staticTexts["RHR Stats"]
+        let dailyLabel = app.staticTexts["DailyRHRLabel"]
+        let splashScreen = app.staticTexts["DRHR App"]
+        let statusLabel = app.staticTexts["StatusLabel"]
+        // Wait for splash screen to disappear
+        XCTAssert(splashScreen.waitForNonExistence(timeout: 4))
+        // Verify that the main interface is now displayed
+        XCTAssertTrue(appInterface.exists)
+        XCTAssertTrue(dailyLabel.waitForExistence(timeout: 3), "'Daily RHR:' label should be displayed.")
+        XCTAssertEqual(dailyLabel.label, "Daily RHR: 65")
+            
+        XCTAssertTrue(statusLabel.waitForExistence(timeout: 3), "'Status:' label should be displayed.")
+        XCTAssertEqual(statusLabel.label, "Status: Elevated" )
+
+    }
 }
