@@ -42,11 +42,11 @@ class NotificationManager: NSObject, ObservableObject {
         let notificationContent = UNMutableNotificationContent()
         
         notificationContent.title = NSString.localizedUserNotificationString(forKey: "Elevated", arguments: nil)
-        notificationContent.body = NSString.localizedUserNotificationString(forKey: "Elevated", arguments: nil)
+        notificationContent.body = NSString.localizedUserNotificationString(forKey: "Your dRHR is elevated, you may be getting ill. ", arguments: nil)
         notificationContent.sound = UNNotificationSound.default
-        let notificationIdentifier = "elevated"
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: trigger)
+        //let notificationIdentifier = "elevated"
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: notificationContent, trigger: trigger)
         
         do {
             try await notificationCenter.add(request)
@@ -60,12 +60,12 @@ class NotificationManager: NSObject, ObservableObject {
         let notificationContent = UNMutableNotificationContent()
         
         notificationContent.title = NSString.localizedUserNotificationString(forKey: "Normal", arguments: nil)
-        notificationContent.body = NSString.localizedUserNotificationString(forKey: "Normal", arguments: nil)
+        notificationContent.body = NSString.localizedUserNotificationString(forKey: "Your dRHR is normal, continue as usual.", arguments: nil)
         notificationContent.sound = UNNotificationSound.default
-        let notificationIdentifier = "normal"
+        //let notificationIdentifier = "normal"
         
-        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 1, repeats: false)
-        let request = UNNotificationRequest(identifier: notificationIdentifier, content: notificationContent, trigger: trigger)
+        let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 10, repeats: false)
+        let request = UNNotificationRequest(identifier: UUID().uuidString, content: notificationContent, trigger: trigger)
         
         do {
             try await notificationCenter.add(request)
@@ -74,15 +74,10 @@ class NotificationManager: NSObject, ObservableObject {
         }
     }
     
-    func clearBadge() {
-        
-    }
 }
-// Add badge to notifcation functions
-// Add actions for what to do with the local notificaionts
+
 
 //Trigger based on status in COMPARE FUNC HEALTHMODEL
 
 //Create separate views to model notification and different statuses
-//Figure out how end to end testing with real data will work on the watch
-//Mock via tests and screen recording
+

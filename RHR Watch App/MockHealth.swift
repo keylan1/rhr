@@ -29,7 +29,7 @@ class MockHealthModel: HealthModelProtocol {
 
         func getBaselineRHR(completion: @escaping (Double?) -> Void) {
             // Mock baseline RHR (e.g., 60 bpm)
-            completion(58.0)
+            completion(57.0)
         }
 
     func compare(completion: @escaping(String?) -> Void) {

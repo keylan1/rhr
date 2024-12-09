@@ -4,6 +4,8 @@
 //
 //  Created by Sarah Keller on 14.10.24.
 //
+//With help from CS50 Duck & PerplexityAI
+//App icon created via canva image generator (AI)
 
 import SwiftUI
 
