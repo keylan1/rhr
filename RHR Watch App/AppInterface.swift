@@ -6,14 +6,12 @@
 //
 
 import SwiftUI
-import WatchKit
 
 struct AppInterface: View {
     @ObservedObject var healthModel: HealthModel
     @State private var dailyRestingHeartRate: Double?
     @State private var status: String?
     //@State private var counter: Int = 0
-    let deviceName = WKInterfaceDevice.current().name
     
     var body: some View {
         VStack (alignment: .leading, spacing: 15) {
