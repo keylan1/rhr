@@ -5,6 +5,8 @@
 //  Created by Sarah Keller on 04.11.24.
 //
 
+//Wont trigger notifications on the physical watch if mocking.
+
 import Foundation
 import UserNotifications
 
