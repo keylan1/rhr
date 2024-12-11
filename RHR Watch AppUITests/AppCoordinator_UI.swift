@@ -22,12 +22,13 @@ final class AppCoordinator_UI: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
+    
     func testSplashScreenAppearsInitially() {
         let app = XCUIApplication()
         app.launch()
             
         // Verify that the splash screen is displayed
-        let splashScreen = app.staticTexts["DRHR App"]
+        let splashScreen = app.staticTexts["dRHR"]
         let loadingIndicator = app.activityIndicators["LoadingIndicator"]
         
         XCTAssertTrue(splashScreen.exists)
@@ -41,8 +42,8 @@ final class AppCoordinator_UI: XCTestCase {
         
         print(app.debugDescription)
         
-        let splashScreen = app.staticTexts["DRHR App"]
-        let appInterface = app.staticTexts["RHR Stats"]
+        let splashScreen = app.staticTexts["dRHR"]
+        let appInterface = app.staticTexts["Welcome!"]
         //let dailyRHR = app.staticTexts["Daily RHR:"]
         // Wait for splash screen to disappear
         XCTAssert(splashScreen.waitForNonExistence(timeout: 4))
@@ -61,9 +62,9 @@ final class AppCoordinator_UI: XCTestCase {
         
         print(app.debugDescription)
 
-        let appInterface = app.staticTexts["RHR Stats"]
+        let appInterface = app.staticTexts["Welcome!"]
         let dailyLabel = app.staticTexts["DailyRHRLabel"]
-        let splashScreen = app.staticTexts["DRHR App"]
+        let splashScreen = app.staticTexts["dRHR"]
         let statusLabel = app.staticTexts["StatusLabel"]
         // Wait for splash screen to disappear
         XCTAssert(splashScreen.waitForNonExistence(timeout: 4))
