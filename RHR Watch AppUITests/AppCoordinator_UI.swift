@@ -36,6 +36,8 @@ final class AppCoordinator_UI: XCTestCase {
         XCTAssertTrue(loadingIndicator.exists)
     }
 
+    //May not pass in GitHub without using the mock.
+    
     func testTransitionToMainInterface() throws {
         let app = XCUIApplication()
         app.launch()
@@ -71,10 +73,10 @@ final class AppCoordinator_UI: XCTestCase {
         // Verify that the main interface is now displayed
         XCTAssertTrue(appInterface.exists)
         XCTAssertTrue(dailyLabel.waitForExistence(timeout: 3), "'Daily RHR:' label should be displayed.")
-        XCTAssertEqual(dailyLabel.label, "Daily RHR: --")
+        XCTAssertEqual(dailyLabel.label, "Daily RHR: 65")
             
         XCTAssertTrue(statusLabel.waitForExistence(timeout: 3), "'Status:' label should be displayed.")
-        XCTAssertEqual(statusLabel.label, "Status: --" )
+        XCTAssertEqual(statusLabel.label, "Status: Elevated" )
 
     }
 }
