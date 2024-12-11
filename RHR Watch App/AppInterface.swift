@@ -11,20 +11,24 @@ struct AppInterface: View {
     @ObservedObject var healthModel: MockHealthModel
     @State private var dailyRestingHeartRate: Double?
     @State private var status: String?
-    @State private var counter: Int = 0
+    //@State private var counter: Int = 0
     
     var body: some View {
         VStack (alignment: .leading, spacing: 15) {
-            HStack {
-                Text("RHR Stats").font(.title2)
-                                        .fontWeight(.bold)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                    
+            VStack {
+                    Text("Welcome!").font(.title2)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    Text("Your dRHR Stats ").font(.title3)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 5)
+                
             }
             Spacer()
             Text("Daily RHR: \(dailyRestingHeartRate?.formatted(.number) ?? "--"        )").accessibilityIdentifier("DailyRHRLabel")
             Text("Status: \(status ?? "--")").accessibilityIdentifier("StatusLabel").foregroundColor(status == "Normal" ? Color.green : (status == "Elevated" ? Color.yellow : Color.red))
-            Text("Counter: \(counter)").accessibilityIdentifier("CounterLabel") .foregroundColor(Color.gray.opacity(0.7))
+            //Text("Counter: \(counter)").accessibilityIdentifier("CounterLabel") .foregroundColor(Color.gray.opacity(0.7))
         }
         .onAppear{fetchHeartRate()
             fetchStatus()}

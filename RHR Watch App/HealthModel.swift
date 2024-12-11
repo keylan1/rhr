@@ -8,9 +8,10 @@
 import Foundation
 import HealthKit
 
-class HealthModel: HealthModelProtocol {
+class HealthModel: HealthModelProtocol {    
     let healthStore = HKHealthStore()
     @Published var isAuthorized = false
+    var notificationManager = NotificationManager()
     
     // Request authorization to access HealthKit.
     func requestAuthorization() async {
@@ -60,7 +61,8 @@ class HealthModel: HealthModelProtocol {
         let today = calendar.startOfDay(for: Date())
         
         guard let endDate = calendar.date(byAdding: .day, value: 1, to: today) else {
-            fatalError("Could not create end date")
+            print("Could not create end date")
+            return
         }
         
         //guard let minStartDate = calendar.date(byAdding: .day, value: -14, to: endDate) else {
@@ -68,7 +70,8 @@ class HealthModel: HealthModelProtocol {
         //}
         
         guard let idealStartDate = calendar.date(byAdding: .day, value: -45, to: endDate) else {
-            fatalError("Start date less than 45 days")
+            print("Start date less than 45 days")
+            return
         }
         
         let idealBaselineTime = HKQuery.predicateForSamples(withStart: idealStartDate, end: endDate)
@@ -130,8 +133,14 @@ class HealthModel: HealthModelProtocol {
                         let diff = restingHeartRate - baselineRHR
                         let toCompare = 0.1 * baselineRHR
                         if diff >= toCompare {
+                            Task {
+                                await self.notificationManager.illNotification()
+                            }
                             completion("Elevated")
                         } else {
+                            Task {
+                                await self.notificationManager.normalNotification()
+                            }
                             completion("Normal")
                         }
                     } else {

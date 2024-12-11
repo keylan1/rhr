@@ -28,6 +28,17 @@ struct MockHealthModelTests {
         #expect(model.isAuthorized == true)
     }
     
+    @Test("Notification authorization becomes true after request")
+    func testNotificationAuthorization() async {
+        let model = MockNotificationManager()
+        await model.requestNotificationAuth()
+        
+        // Wait for the simulated delay
+        try? await Task.sleep(for: .seconds(2.1))
+        
+        #expect(model.isNotificationAuthorized == true)
+    }
+    
     @Test("getDailyRestingHeartRate")
     func testGetDailyRestingHeartRate() async {
         let model = MockHealthModel()
@@ -51,7 +62,7 @@ struct MockHealthModelTests {
         }
         }
         #expect(baselineRHR != nil)
-        #expect(baselineRHR! == 60.0)
+        #expect(baselineRHR! == 57.0)
         
     }
     

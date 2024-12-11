@@ -11,8 +11,11 @@ struct SplashScreenView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "heart")
-            Text("DRHR App").bold().font(.title2).padding(15)
+            Image("drhr_appicon")
+                .resizable()
+                .aspectRatio(contentMode: .fit)
+                .frame(width: 60, height: 60)
+            Text("dRHR").bold().font(.title2).padding(10)
             Spacer()
             ProgressView().accessibilityIdentifier("LoadingIndicator").scaleEffect(1.75)
         }
