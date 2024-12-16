@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		26048BAC2CC7E164009F89F3 /* wos-build.yml in Resources */ = {isa = PBXBuildFile; fileRef = 26048BA92CC7E164009F89F3 /* wos-build.yml */; };
+		26304D312D10851B002FE4AE /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 26304D302D108512002FE4AE /* README.md */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -32,6 +33,7 @@
 		262123D92CBD530E0071A520 /* RHR Watch App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RHR Watch App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		262123E92CBD53110071A520 /* RHR Watch AppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RHR Watch AppTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		262123F32CBD53110071A520 /* RHR Watch AppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "RHR Watch AppUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		26304D302D108512002FE4AE /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -96,6 +98,7 @@
 		262123D02CBD530E0071A520 = {
 			isa = PBXGroup;
 			children = (
+				26304D302D108512002FE4AE /* README.md */,
 				26048BAB2CC7E164009F89F3 /* .github */,
 				262123DB2CBD530E0071A520 /* RHR Watch App */,
 				262123EC2CBD53110071A520 /* RHR Watch AppTests */,
@@ -235,6 +238,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				26048BAC2CC7E164009F89F3 /* wos-build.yml in Resources */,
+				26304D312D10851B002FE4AE /* README.md in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
