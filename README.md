@@ -23,9 +23,9 @@ dRHR App is a watchOS application designed to track and analyze daily resting he
 ## Project Structure
 
 - `AppCoordinator.swift`: Main view controller, manages the app's primary interface.
-- `HealthModel.swift`: Handles all HealthKit interactions including authorization for RHR data retrieval and contains functions for analyzing RHR data and detecting patterns.
+- `HealthModel.swift`: Handles all HealthStore interactions including authorization for RHR data retrieval and contains functions for analyzing RHR data and detecting patterns.
 - `NotificationManager.swift`: Manages requesting authorization for notificaitons, the creation, and delivery of user notifications.
-- `MockHealth.swift`: Mock version of HealthKit for testing purposes, using predetermined values and mocking authorization for health and notifications.
+- `MockHealth.swift`: Mock version of HealthStore for testing purposes, using predetermined values and mocking authorization for health and notifications.
 - `RHR_Unit_Tests.swift`: Unit tests for core app functionalities.
 - `AppCoordinator_UI.swift`: UI tests to ensure smooth user experience.
 
