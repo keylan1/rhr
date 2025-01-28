@@ -1,7 +1,7 @@
 
 # dRHR App: Daily Resting Heart Rate Tracker for Apple Watch
 
-## Video Demo: [URL to be added]
+## Video Demo: https://youtu.be/tN09oYcipoU
 
 ## Description
 
