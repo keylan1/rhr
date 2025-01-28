@@ -32,16 +32,15 @@ dRHR App is a watchOS application designed to track and analyze daily resting he
 ## Implementation Details
 
 ### SwiftUI
-The app's user interface is built entirely with SwiftUI, providing a modern and responsive design. SwiftUI's declarative syntax allowed for rapid development of complex UI elements, particularly useful for creating the interactive charts and settings screens.
+The app's user interface is built entirely with SwiftUI, providing a modern, responsive, basic design.
 
 ### HealthKit Integration
-HealthKit is central to the app's functionality, providing secure access to the user's heart rate data. The `HealthModel` class encapsulates all HealthKit-related operations, ensuring clean separation of concerns and easier testing.
+HealthKit is central to the app's functionality, providing secure access to the user's resting heart rate data from the HealthStore. Both to establish a baseline and to compare said baseline to outlier's in the user's resting heart rate data. The `HealthModel` class encapsulates all HealthKit-related operations.
 
 ### UserNotifications
 The app uses the UserNotifications framework to deliver timely alerts about changes in RHR.
 
 ### Testing Strategy
-A comprehensive testing suite is implemented using XCTest. This includes:
 - Unit tests for the RHR analysis algorithms and HealthKit data processing.
 - UI tests to verify the app's interface and user interactions.
 - Testing on a physical watch and in the simulator.
